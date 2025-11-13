@@ -2,7 +2,6 @@ package co.edu.uptc.API_Pedidos.service;
 
 import co.edu.uptc.API_Pedidos.model.Pedido;
 import co.edu.uptc.API_Pedidos.repository.PedidoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -10,12 +9,15 @@ import java.util.List;
 
 @Service
 public class PedidoService {
-
-    @Autowired
+    
     private PedidoRepository pedidoRepository;
 
-    private final String BEBIDAS_API_URL = "http://localhost:8000/menu/";
+    public PedidoService(PedidoRepository pedidoRepository) {
+        this.pedidoRepository = pedidoRepository;
+    }
 
+    private final String BEBIDAS_API_URL = "http://localhost:8000/menu/";
+    
     public boolean bebidaDisponible(String name) {
         RestTemplate restTemplate = new RestTemplate();
         try {
@@ -27,7 +29,7 @@ public class PedidoService {
             return false;
         }
     }
-
+    
     public boolean crearPedido(Pedido pedido) {
         if (bebidaDisponible(pedido.getNombre())) {
             pedido.setEstadoPedido("ACEPTADO");
@@ -41,5 +43,9 @@ public class PedidoService {
 
     public List<Pedido> listarPedidos() {
         return pedidoRepository.findAll();
+    }
+
+    public PedidoRepository getPedidoRepository() {
+        return pedidoRepository;
     }
 }
