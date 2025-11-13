@@ -16,7 +16,6 @@ class PedidoServiceTest {
     void setUp() {
         pedidoRepositoryMock = Mockito.mock(PedidoRepository.class);
         pedidoService = new PedidoService(pedidoRepositoryMock);
-        pedidoRepositoryMock = pedidoService.getPedidoRepository();
     }
 
     @Test
